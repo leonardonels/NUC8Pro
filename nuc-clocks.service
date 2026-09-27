@@ -1,0 +1,12 @@
+[Unit]
+Description=NUC max-performance clocks (jetson_clocks-like)
+After=power-profiles-daemon.service multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/nuc_clocks.sh
+ExecStop=/usr/local/sbin/nuc_clocks.sh --restore
+
+[Install]
+WantedBy=multi-user.target
