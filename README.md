@@ -148,6 +148,21 @@ sudo turbostat --quiet --show Busy%,Bzy_MHz,PkgWatt,PkgTmp -i 1
 
 Compare `PkgWatt` at idle with the service started and stopped. The difference is the idle cost of the lock.
 
+### Stress test
+
+Load every logical CPU for 60 s. Run it while `turbostat` is running in a second terminal.
+
+```bash
+sudo apt update
+sudo apt install stress
+stress --cpu $(nproc) --timeout 60s
+```
+
+In the `turbostat` output, watch for:
+- `Bzy_MHz` starting near the turbo ceiling, then settling once PL2 expires and PL1 takes over.
+- `PkgWatt` converging to the PL1 value.
+- `PkgTmp` staying below the throttle point (~100 °C).
+
 ---
 
 ## Notes
